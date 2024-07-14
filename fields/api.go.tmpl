@@ -1,7 +1,7 @@
 {{- $structName := .StructName }}
 
 {{ define "field" }}
-	{{ .FieldName }} {{ if .IsArray }}[]{{else if .OmitEmpty }}*{{end}}{{ .FieldType }} `json:"{{ .JSONName }}{{ if .OmitEmpty }},omitempty{{ end }}"` {{ if .FieldValidation }}// {{ .FieldValidation }}{{ end }} {{- end }}
+	{{ .FieldName }} {{ if .IsArray }}[]{{end}}{{ .FieldType }} `json:"{{ .JSONName }}{{ if .OmitEmpty }},omitempty{{ end }}"` {{ if .FieldValidation }}// {{ .FieldValidation }}{{ end }} {{- end }}
 {{ define "field-customUnmarshalType" }}
 	{{- if eq .CustomUnmarshalType "" }}{{else}}
 			{{ .FieldName }} {{ if .IsArray }}[]{{end}}{{ .CustomUnmarshalType }} `json:"{{ .JSONName }}"`{{ end }} {{- end }}
@@ -15,7 +15,7 @@
 				dst.{{ .FieldName }}[i] = {{ .FieldType }}(v)
 		}
 		{{- else }}
-		dst.{{ .FieldName }} = aux.{{ .FieldName }}.Value()
+		dst.{{ .FieldName }} = {{ .FieldType }}(aux.{{ .FieldName }})
 		{{- end }}{{- end }}{{- end }}
 // Code generated from ace.jar fields *.json files
 // DO NOT EDIT.
