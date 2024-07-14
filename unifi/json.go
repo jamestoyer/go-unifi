@@ -39,10 +39,6 @@ func (e *numberOrString) UnmarshalJSON(b []byte) error {
 	return nil
 }
 
-func (e *numberOrString) Value() *string {
-	return (*string)(e)
-}
-
 // emptyStringInt was created due to the behavior change in
 // Go 1.14 with json.Number's handling of empty string.
 type emptyStringInt int
@@ -79,10 +75,6 @@ func (e *emptyStringInt) MarshalJSON() ([]byte, error) {
 	return []byte(strconv.Itoa(int(*e))), nil
 }
 
-func (e *emptyStringInt) Value() *int {
-	return (*int)(e)
-}
-
 type booleanishString bool
 
 func (e *booleanishString) UnmarshalJSON(b []byte) error {
@@ -95,8 +87,4 @@ func (e *booleanishString) UnmarshalJSON(b []byte) error {
 		return nil
 	}
 	return errors.New("Could not unmarshal JSON value.")
-}
-
-func (e *booleanishString) Value() *bool {
-	return (*bool)(e)
 }
