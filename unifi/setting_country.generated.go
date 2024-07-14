@@ -55,7 +55,7 @@ func (c *Client) getSettingCountry(ctx context.Context, site string) (*SettingCo
 		Data []SettingCountry `json:"data"`
 	}
 
-	err := c.do(ctx, "GET", fmt.Sprintf("s/%s/get/setting/country", site), nil, &respBody)
+	err := c.Do(ctx, "GET", fmt.Sprintf("s/%s/get/setting/country", site), nil, &respBody)
 	if err != nil {
 		return nil, err
 	}
@@ -75,7 +75,7 @@ func (c *Client) updateSettingCountry(ctx context.Context, site string, d *Setti
 	}
 
 	d.Key = "country"
-	err := c.do(ctx, "PUT", fmt.Sprintf("s/%s/set/setting/country", site), d, &respBody)
+	err := c.Do(ctx, "PUT", fmt.Sprintf("s/%s/set/setting/country", site), d, &respBody)
 	if err != nil {
 		return nil, err
 	}

@@ -52,7 +52,7 @@ func (c *Client) getSettingMagicSiteToSiteVpn(ctx context.Context, site string) 
 		Data []SettingMagicSiteToSiteVpn `json:"data"`
 	}
 
-	err := c.do(ctx, "GET", fmt.Sprintf("s/%s/get/setting/magic_site_to_site_vpn", site), nil, &respBody)
+	err := c.Do(ctx, "GET", fmt.Sprintf("s/%s/get/setting/magic_site_to_site_vpn", site), nil, &respBody)
 	if err != nil {
 		return nil, err
 	}
@@ -72,7 +72,7 @@ func (c *Client) updateSettingMagicSiteToSiteVpn(ctx context.Context, site strin
 	}
 
 	d.Key = "magic_site_to_site_vpn"
-	err := c.do(ctx, "PUT", fmt.Sprintf("s/%s/set/setting/magic_site_to_site_vpn", site), d, &respBody)
+	err := c.Do(ctx, "PUT", fmt.Sprintf("s/%s/set/setting/magic_site_to_site_vpn", site), d, &respBody)
 	if err != nil {
 		return nil, err
 	}

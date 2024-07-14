@@ -117,7 +117,7 @@ func (c *Client) getSettingSuperMgmt(ctx context.Context, site string) (*Setting
 		Data []SettingSuperMgmt `json:"data"`
 	}
 
-	err := c.do(ctx, "GET", fmt.Sprintf("s/%s/get/setting/super_mgmt", site), nil, &respBody)
+	err := c.Do(ctx, "GET", fmt.Sprintf("s/%s/get/setting/super_mgmt", site), nil, &respBody)
 	if err != nil {
 		return nil, err
 	}
@@ -137,7 +137,7 @@ func (c *Client) updateSettingSuperMgmt(ctx context.Context, site string, d *Set
 	}
 
 	d.Key = "super_mgmt"
-	err := c.do(ctx, "PUT", fmt.Sprintf("s/%s/set/setting/super_mgmt", site), d, &respBody)
+	err := c.Do(ctx, "PUT", fmt.Sprintf("s/%s/set/setting/super_mgmt", site), d, &respBody)
 	if err != nil {
 		return nil, err
 	}

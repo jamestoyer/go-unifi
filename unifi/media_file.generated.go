@@ -50,7 +50,7 @@ func (c *Client) listMediaFile(ctx context.Context, site string) ([]MediaFile, e
 		Data []MediaFile `json:"data"`
 	}
 
-	err := c.do(ctx, "GET", fmt.Sprintf("s/%s/rest/mediafile", site), nil, &respBody)
+	err := c.Do(ctx, "GET", fmt.Sprintf("s/%s/rest/mediafile", site), nil, &respBody)
 	if err != nil {
 		return nil, err
 	}
@@ -64,7 +64,7 @@ func (c *Client) getMediaFile(ctx context.Context, site, id string) (*MediaFile,
 		Data []MediaFile `json:"data"`
 	}
 
-	err := c.do(ctx, "GET", fmt.Sprintf("s/%s/rest/mediafile/%s", site, id), nil, &respBody)
+	err := c.Do(ctx, "GET", fmt.Sprintf("s/%s/rest/mediafile/%s", site, id), nil, &respBody)
 	if err != nil {
 		return nil, err
 	}
@@ -78,7 +78,7 @@ func (c *Client) getMediaFile(ctx context.Context, site, id string) (*MediaFile,
 }
 
 func (c *Client) deleteMediaFile(ctx context.Context, site, id string) error {
-	err := c.do(ctx, "DELETE", fmt.Sprintf("s/%s/rest/mediafile/%s", site, id), struct{}{}, nil)
+	err := c.Do(ctx, "DELETE", fmt.Sprintf("s/%s/rest/mediafile/%s", site, id), struct{}{}, nil)
 	if err != nil {
 		return err
 	}
@@ -91,7 +91,7 @@ func (c *Client) createMediaFile(ctx context.Context, site string, d *MediaFile)
 		Data []MediaFile `json:"data"`
 	}
 
-	err := c.do(ctx, "POST", fmt.Sprintf("s/%s/rest/mediafile", site), d, &respBody)
+	err := c.Do(ctx, "POST", fmt.Sprintf("s/%s/rest/mediafile", site), d, &respBody)
 	if err != nil {
 		return nil, err
 	}
@@ -111,7 +111,7 @@ func (c *Client) updateMediaFile(ctx context.Context, site string, d *MediaFile)
 		Data []MediaFile `json:"data"`
 	}
 
-	err := c.do(ctx, "PUT", fmt.Sprintf("s/%s/rest/mediafile/%s", site, d.ID), d, &respBody)
+	err := c.Do(ctx, "PUT", fmt.Sprintf("s/%s/rest/mediafile/%s", site, d.ID), d, &respBody)
 	if err != nil {
 		return nil, err
 	}

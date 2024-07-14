@@ -52,7 +52,7 @@ func (c *Client) getSettingNetworkOptimization(ctx context.Context, site string)
 		Data []SettingNetworkOptimization `json:"data"`
 	}
 
-	err := c.do(ctx, "GET", fmt.Sprintf("s/%s/get/setting/network_optimization", site), nil, &respBody)
+	err := c.Do(ctx, "GET", fmt.Sprintf("s/%s/get/setting/network_optimization", site), nil, &respBody)
 	if err != nil {
 		return nil, err
 	}
@@ -72,7 +72,7 @@ func (c *Client) updateSettingNetworkOptimization(ctx context.Context, site stri
 	}
 
 	d.Key = "network_optimization"
-	err := c.do(ctx, "PUT", fmt.Sprintf("s/%s/set/setting/network_optimization", site), d, &respBody)
+	err := c.Do(ctx, "PUT", fmt.Sprintf("s/%s/set/setting/network_optimization", site), d, &respBody)
 	if err != nil {
 		return nil, err
 	}

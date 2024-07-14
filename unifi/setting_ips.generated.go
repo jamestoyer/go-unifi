@@ -229,7 +229,7 @@ func (c *Client) getSettingIps(ctx context.Context, site string) (*SettingIps, e
 		Data []SettingIps `json:"data"`
 	}
 
-	err := c.do(ctx, "GET", fmt.Sprintf("s/%s/get/setting/ips", site), nil, &respBody)
+	err := c.Do(ctx, "GET", fmt.Sprintf("s/%s/get/setting/ips", site), nil, &respBody)
 	if err != nil {
 		return nil, err
 	}
@@ -249,7 +249,7 @@ func (c *Client) updateSettingIps(ctx context.Context, site string, d *SettingIp
 	}
 
 	d.Key = "ips"
-	err := c.do(ctx, "PUT", fmt.Sprintf("s/%s/set/setting/ips", site), d, &respBody)
+	err := c.Do(ctx, "PUT", fmt.Sprintf("s/%s/set/setting/ips", site), d, &respBody)
 	if err != nil {
 		return nil, err
 	}

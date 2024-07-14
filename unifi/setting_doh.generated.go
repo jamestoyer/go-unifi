@@ -53,7 +53,7 @@ func (c *Client) getSettingDoh(ctx context.Context, site string) (*SettingDoh, e
 		Data []SettingDoh `json:"data"`
 	}
 
-	err := c.do(ctx, "GET", fmt.Sprintf("s/%s/get/setting/doh", site), nil, &respBody)
+	err := c.Do(ctx, "GET", fmt.Sprintf("s/%s/get/setting/doh", site), nil, &respBody)
 	if err != nil {
 		return nil, err
 	}
@@ -73,7 +73,7 @@ func (c *Client) updateSettingDoh(ctx context.Context, site string, d *SettingDo
 	}
 
 	d.Key = "doh"
-	err := c.do(ctx, "PUT", fmt.Sprintf("s/%s/set/setting/doh", site), d, &respBody)
+	err := c.Do(ctx, "PUT", fmt.Sprintf("s/%s/set/setting/doh", site), d, &respBody)
 	if err != nil {
 		return nil, err
 	}

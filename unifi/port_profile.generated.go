@@ -225,7 +225,7 @@ func (c *Client) listPortProfile(ctx context.Context, site string) ([]PortProfil
 		Data []PortProfile `json:"data"`
 	}
 
-	err := c.do(ctx, "GET", fmt.Sprintf("s/%s/rest/portconf", site), nil, &respBody)
+	err := c.Do(ctx, "GET", fmt.Sprintf("s/%s/rest/portconf", site), nil, &respBody)
 	if err != nil {
 		return nil, err
 	}
@@ -239,7 +239,7 @@ func (c *Client) getPortProfile(ctx context.Context, site, id string) (*PortProf
 		Data []PortProfile `json:"data"`
 	}
 
-	err := c.do(ctx, "GET", fmt.Sprintf("s/%s/rest/portconf/%s", site, id), nil, &respBody)
+	err := c.Do(ctx, "GET", fmt.Sprintf("s/%s/rest/portconf/%s", site, id), nil, &respBody)
 	if err != nil {
 		return nil, err
 	}
@@ -253,7 +253,7 @@ func (c *Client) getPortProfile(ctx context.Context, site, id string) (*PortProf
 }
 
 func (c *Client) deletePortProfile(ctx context.Context, site, id string) error {
-	err := c.do(ctx, "DELETE", fmt.Sprintf("s/%s/rest/portconf/%s", site, id), struct{}{}, nil)
+	err := c.Do(ctx, "DELETE", fmt.Sprintf("s/%s/rest/portconf/%s", site, id), struct{}{}, nil)
 	if err != nil {
 		return err
 	}
@@ -266,7 +266,7 @@ func (c *Client) createPortProfile(ctx context.Context, site string, d *PortProf
 		Data []PortProfile `json:"data"`
 	}
 
-	err := c.do(ctx, "POST", fmt.Sprintf("s/%s/rest/portconf", site), d, &respBody)
+	err := c.Do(ctx, "POST", fmt.Sprintf("s/%s/rest/portconf", site), d, &respBody)
 	if err != nil {
 		return nil, err
 	}
@@ -286,7 +286,7 @@ func (c *Client) updatePortProfile(ctx context.Context, site string, d *PortProf
 		Data []PortProfile `json:"data"`
 	}
 
-	err := c.do(ctx, "PUT", fmt.Sprintf("s/%s/rest/portconf/%s", site, d.ID), d, &respBody)
+	err := c.Do(ctx, "PUT", fmt.Sprintf("s/%s/rest/portconf/%s", site, d.ID), d, &respBody)
 	if err != nil {
 		return nil, err
 	}

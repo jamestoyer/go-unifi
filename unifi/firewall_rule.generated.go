@@ -92,7 +92,7 @@ func (c *Client) listFirewallRule(ctx context.Context, site string) ([]FirewallR
 		Data []FirewallRule `json:"data"`
 	}
 
-	err := c.do(ctx, "GET", fmt.Sprintf("s/%s/rest/firewallrule", site), nil, &respBody)
+	err := c.Do(ctx, "GET", fmt.Sprintf("s/%s/rest/firewallrule", site), nil, &respBody)
 	if err != nil {
 		return nil, err
 	}
@@ -106,7 +106,7 @@ func (c *Client) getFirewallRule(ctx context.Context, site, id string) (*Firewal
 		Data []FirewallRule `json:"data"`
 	}
 
-	err := c.do(ctx, "GET", fmt.Sprintf("s/%s/rest/firewallrule/%s", site, id), nil, &respBody)
+	err := c.Do(ctx, "GET", fmt.Sprintf("s/%s/rest/firewallrule/%s", site, id), nil, &respBody)
 	if err != nil {
 		return nil, err
 	}
@@ -120,7 +120,7 @@ func (c *Client) getFirewallRule(ctx context.Context, site, id string) (*Firewal
 }
 
 func (c *Client) deleteFirewallRule(ctx context.Context, site, id string) error {
-	err := c.do(ctx, "DELETE", fmt.Sprintf("s/%s/rest/firewallrule/%s", site, id), struct{}{}, nil)
+	err := c.Do(ctx, "DELETE", fmt.Sprintf("s/%s/rest/firewallrule/%s", site, id), struct{}{}, nil)
 	if err != nil {
 		return err
 	}
@@ -133,7 +133,7 @@ func (c *Client) createFirewallRule(ctx context.Context, site string, d *Firewal
 		Data []FirewallRule `json:"data"`
 	}
 
-	err := c.do(ctx, "POST", fmt.Sprintf("s/%s/rest/firewallrule", site), d, &respBody)
+	err := c.Do(ctx, "POST", fmt.Sprintf("s/%s/rest/firewallrule", site), d, &respBody)
 	if err != nil {
 		return nil, err
 	}
@@ -153,7 +153,7 @@ func (c *Client) updateFirewallRule(ctx context.Context, site string, d *Firewal
 		Data []FirewallRule `json:"data"`
 	}
 
-	err := c.do(ctx, "PUT", fmt.Sprintf("s/%s/rest/firewallrule/%s", site, d.ID), d, &respBody)
+	err := c.Do(ctx, "PUT", fmt.Sprintf("s/%s/rest/firewallrule/%s", site, d.ID), d, &respBody)
 	if err != nil {
 		return nil, err
 	}

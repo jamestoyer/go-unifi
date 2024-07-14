@@ -194,7 +194,7 @@ func (c *Client) listChannelPlan(ctx context.Context, site string) ([]ChannelPla
 		Data []ChannelPlan `json:"data"`
 	}
 
-	err := c.do(ctx, "GET", fmt.Sprintf("s/%s/rest/channelplan", site), nil, &respBody)
+	err := c.Do(ctx, "GET", fmt.Sprintf("s/%s/rest/channelplan", site), nil, &respBody)
 	if err != nil {
 		return nil, err
 	}
@@ -208,7 +208,7 @@ func (c *Client) getChannelPlan(ctx context.Context, site, id string) (*ChannelP
 		Data []ChannelPlan `json:"data"`
 	}
 
-	err := c.do(ctx, "GET", fmt.Sprintf("s/%s/rest/channelplan/%s", site, id), nil, &respBody)
+	err := c.Do(ctx, "GET", fmt.Sprintf("s/%s/rest/channelplan/%s", site, id), nil, &respBody)
 	if err != nil {
 		return nil, err
 	}
@@ -222,7 +222,7 @@ func (c *Client) getChannelPlan(ctx context.Context, site, id string) (*ChannelP
 }
 
 func (c *Client) deleteChannelPlan(ctx context.Context, site, id string) error {
-	err := c.do(ctx, "DELETE", fmt.Sprintf("s/%s/rest/channelplan/%s", site, id), struct{}{}, nil)
+	err := c.Do(ctx, "DELETE", fmt.Sprintf("s/%s/rest/channelplan/%s", site, id), struct{}{}, nil)
 	if err != nil {
 		return err
 	}
@@ -235,7 +235,7 @@ func (c *Client) createChannelPlan(ctx context.Context, site string, d *ChannelP
 		Data []ChannelPlan `json:"data"`
 	}
 
-	err := c.do(ctx, "POST", fmt.Sprintf("s/%s/rest/channelplan", site), d, &respBody)
+	err := c.Do(ctx, "POST", fmt.Sprintf("s/%s/rest/channelplan", site), d, &respBody)
 	if err != nil {
 		return nil, err
 	}
@@ -255,7 +255,7 @@ func (c *Client) updateChannelPlan(ctx context.Context, site string, d *ChannelP
 		Data []ChannelPlan `json:"data"`
 	}
 
-	err := c.do(ctx, "PUT", fmt.Sprintf("s/%s/rest/channelplan/%s", site, d.ID), d, &respBody)
+	err := c.Do(ctx, "PUT", fmt.Sprintf("s/%s/rest/channelplan/%s", site, d.ID), d, &respBody)
 	if err != nil {
 		return nil, err
 	}

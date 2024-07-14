@@ -58,7 +58,7 @@ func (c *Client) getSettingSuperCloudaccess(ctx context.Context, site string) (*
 		Data []SettingSuperCloudaccess `json:"data"`
 	}
 
-	err := c.do(ctx, "GET", fmt.Sprintf("s/%s/get/setting/super_cloudaccess", site), nil, &respBody)
+	err := c.Do(ctx, "GET", fmt.Sprintf("s/%s/get/setting/super_cloudaccess", site), nil, &respBody)
 	if err != nil {
 		return nil, err
 	}
@@ -78,7 +78,7 @@ func (c *Client) updateSettingSuperCloudaccess(ctx context.Context, site string,
 	}
 
 	d.Key = "super_cloudaccess"
-	err := c.do(ctx, "PUT", fmt.Sprintf("s/%s/set/setting/super_cloudaccess", site), d, &respBody)
+	err := c.Do(ctx, "PUT", fmt.Sprintf("s/%s/set/setting/super_cloudaccess", site), d, &respBody)
 	if err != nil {
 		return nil, err
 	}

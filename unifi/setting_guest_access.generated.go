@@ -161,7 +161,7 @@ func (c *Client) getSettingGuestAccess(ctx context.Context, site string) (*Setti
 		Data []SettingGuestAccess `json:"data"`
 	}
 
-	err := c.do(ctx, "GET", fmt.Sprintf("s/%s/get/setting/guest_access", site), nil, &respBody)
+	err := c.Do(ctx, "GET", fmt.Sprintf("s/%s/get/setting/guest_access", site), nil, &respBody)
 	if err != nil {
 		return nil, err
 	}
@@ -181,7 +181,7 @@ func (c *Client) updateSettingGuestAccess(ctx context.Context, site string, d *S
 	}
 
 	d.Key = "guest_access"
-	err := c.do(ctx, "PUT", fmt.Sprintf("s/%s/set/setting/guest_access", site), d, &respBody)
+	err := c.Do(ctx, "PUT", fmt.Sprintf("s/%s/set/setting/guest_access", site), d, &respBody)
 	if err != nil {
 		return nil, err
 	}

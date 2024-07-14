@@ -51,7 +51,7 @@ func (c *Client) listBroadcastGroup(ctx context.Context, site string) ([]Broadca
 		Data []BroadcastGroup `json:"data"`
 	}
 
-	err := c.do(ctx, "GET", fmt.Sprintf("s/%s/rest/broadcastgroup", site), nil, &respBody)
+	err := c.Do(ctx, "GET", fmt.Sprintf("s/%s/rest/broadcastgroup", site), nil, &respBody)
 	if err != nil {
 		return nil, err
 	}
@@ -65,7 +65,7 @@ func (c *Client) getBroadcastGroup(ctx context.Context, site, id string) (*Broad
 		Data []BroadcastGroup `json:"data"`
 	}
 
-	err := c.do(ctx, "GET", fmt.Sprintf("s/%s/rest/broadcastgroup/%s", site, id), nil, &respBody)
+	err := c.Do(ctx, "GET", fmt.Sprintf("s/%s/rest/broadcastgroup/%s", site, id), nil, &respBody)
 	if err != nil {
 		return nil, err
 	}
@@ -79,7 +79,7 @@ func (c *Client) getBroadcastGroup(ctx context.Context, site, id string) (*Broad
 }
 
 func (c *Client) deleteBroadcastGroup(ctx context.Context, site, id string) error {
-	err := c.do(ctx, "DELETE", fmt.Sprintf("s/%s/rest/broadcastgroup/%s", site, id), struct{}{}, nil)
+	err := c.Do(ctx, "DELETE", fmt.Sprintf("s/%s/rest/broadcastgroup/%s", site, id), struct{}{}, nil)
 	if err != nil {
 		return err
 	}
@@ -92,7 +92,7 @@ func (c *Client) createBroadcastGroup(ctx context.Context, site string, d *Broad
 		Data []BroadcastGroup `json:"data"`
 	}
 
-	err := c.do(ctx, "POST", fmt.Sprintf("s/%s/rest/broadcastgroup", site), d, &respBody)
+	err := c.Do(ctx, "POST", fmt.Sprintf("s/%s/rest/broadcastgroup", site), d, &respBody)
 	if err != nil {
 		return nil, err
 	}
@@ -112,7 +112,7 @@ func (c *Client) updateBroadcastGroup(ctx context.Context, site string, d *Broad
 		Data []BroadcastGroup `json:"data"`
 	}
 
-	err := c.do(ctx, "PUT", fmt.Sprintf("s/%s/rest/broadcastgroup/%s", site, d.ID), d, &respBody)
+	err := c.Do(ctx, "PUT", fmt.Sprintf("s/%s/rest/broadcastgroup/%s", site, d.ID), d, &respBody)
 	if err != nil {
 		return nil, err
 	}

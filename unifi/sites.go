@@ -25,7 +25,7 @@ func (c *Client) ListSites(ctx context.Context) ([]Site, error) {
 		Data []Site `json:"data"`
 	}
 
-	err := c.do(ctx, "GET", "self/sites", nil, &respBody)
+	err := c.Do(ctx, "GET", "self/sites", nil, &respBody)
 	if err != nil {
 		return nil, err
 	}
@@ -62,7 +62,7 @@ func (c *Client) CreateSite(ctx context.Context, description string) ([]Site, er
 		Data []Site `json:"data"`
 	}
 
-	err := c.do(ctx, "POST", "s/default/cmd/sitemgr", reqBody, &respBody)
+	err := c.Do(ctx, "POST", "s/default/cmd/sitemgr", reqBody, &respBody)
 	if err != nil {
 		return nil, err
 	}
@@ -84,7 +84,7 @@ func (c *Client) DeleteSite(ctx context.Context, id string) ([]Site, error) {
 		Data []Site `json:"data"`
 	}
 
-	err := c.do(ctx, "POST", "s/default/cmd/sitemgr", reqBody, &respBody)
+	err := c.Do(ctx, "POST", "s/default/cmd/sitemgr", reqBody, &respBody)
 	if err != nil {
 		return nil, err
 	}
@@ -106,7 +106,7 @@ func (c *Client) UpdateSite(ctx context.Context, name, description string) ([]Si
 		Data []Site `json:"data"`
 	}
 
-	err := c.do(ctx, "POST", fmt.Sprintf("s/%s/cmd/sitemgr", name), reqBody, &respBody)
+	err := c.Do(ctx, "POST", fmt.Sprintf("s/%s/cmd/sitemgr", name), reqBody, &respBody)
 	if err != nil {
 		return nil, err
 	}

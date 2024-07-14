@@ -52,7 +52,7 @@ func (c *Client) getSettingSslInspection(ctx context.Context, site string) (*Set
 		Data []SettingSslInspection `json:"data"`
 	}
 
-	err := c.do(ctx, "GET", fmt.Sprintf("s/%s/get/setting/ssl_inspection", site), nil, &respBody)
+	err := c.Do(ctx, "GET", fmt.Sprintf("s/%s/get/setting/ssl_inspection", site), nil, &respBody)
 	if err != nil {
 		return nil, err
 	}
@@ -72,7 +72,7 @@ func (c *Client) updateSettingSslInspection(ctx context.Context, site string, d 
 	}
 
 	d.Key = "ssl_inspection"
-	err := c.do(ctx, "PUT", fmt.Sprintf("s/%s/set/setting/ssl_inspection", site), d, &respBody)
+	err := c.Do(ctx, "PUT", fmt.Sprintf("s/%s/set/setting/ssl_inspection", site), d, &respBody)
 	if err != nil {
 		return nil, err
 	}

@@ -52,7 +52,7 @@ func (c *Client) getSettingSuperEvents(ctx context.Context, site string) (*Setti
 		Data []SettingSuperEvents `json:"data"`
 	}
 
-	err := c.do(ctx, "GET", fmt.Sprintf("s/%s/get/setting/super_events", site), nil, &respBody)
+	err := c.Do(ctx, "GET", fmt.Sprintf("s/%s/get/setting/super_events", site), nil, &respBody)
 	if err != nil {
 		return nil, err
 	}
@@ -72,7 +72,7 @@ func (c *Client) updateSettingSuperEvents(ctx context.Context, site string, d *S
 	}
 
 	d.Key = "super_events"
-	err := c.do(ctx, "PUT", fmt.Sprintf("s/%s/set/setting/super_events", site), d, &respBody)
+	err := c.Do(ctx, "PUT", fmt.Sprintf("s/%s/set/setting/super_events", site), d, &respBody)
 	if err != nil {
 		return nil, err
 	}

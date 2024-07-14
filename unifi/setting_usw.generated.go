@@ -52,7 +52,7 @@ func (c *Client) getSettingUsw(ctx context.Context, site string) (*SettingUsw, e
 		Data []SettingUsw `json:"data"`
 	}
 
-	err := c.do(ctx, "GET", fmt.Sprintf("s/%s/get/setting/usw", site), nil, &respBody)
+	err := c.Do(ctx, "GET", fmt.Sprintf("s/%s/get/setting/usw", site), nil, &respBody)
 	if err != nil {
 		return nil, err
 	}
@@ -72,7 +72,7 @@ func (c *Client) updateSettingUsw(ctx context.Context, site string, d *SettingUs
 	}
 
 	d.Key = "usw"
-	err := c.do(ctx, "PUT", fmt.Sprintf("s/%s/set/setting/usw", site), d, &respBody)
+	err := c.Do(ctx, "PUT", fmt.Sprintf("s/%s/set/setting/usw", site), d, &respBody)
 	if err != nil {
 		return nil, err
 	}
