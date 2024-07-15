@@ -196,7 +196,7 @@ func (c *Client) Do(ctx context.Context, method, relativeURL string, reqBody int
 		return err
 	}
 
-	if len(respBytes) == 0 {
+	if respBody == nil || len(respBytes) == 0 {
 		return nil
 	}
 
