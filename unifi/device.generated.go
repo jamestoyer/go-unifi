@@ -46,6 +46,7 @@ type Device struct {
 	GatewayVrrpPriority         int                               `json:"gateway_vrrp_priority,omitempty"` // [1-9][0-9]|[1-9][0-9][0-9]
 	HeightInMeters              float64                           `json:"heightInMeters,omitempty"`
 	Hostname                    string                            `json:"hostname,omitempty"` // .{1,128}
+	IP                          string                            `json:"ip,omitempty"`
 	JumboframeEnabled           bool                              `json:"jumboframe_enabled,omitempty"`
 	LcmBrightness               int                               `json:"lcm_brightness,omitempty"` // [1-9]|[1-9][0-9]|100
 	LcmBrightnessOverride       bool                              `json:"lcm_brightness_override,omitempty"`
