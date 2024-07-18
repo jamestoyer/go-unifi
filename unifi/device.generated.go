@@ -316,22 +316,23 @@ type DevicePortOverrides struct {
 func (dst *DevicePortOverrides) UnmarshalJSON(b []byte) error {
 	type Alias DevicePortOverrides
 	aux := &struct {
-		AggregateNumPorts          emptyStringInt `json:"aggregate_num_ports"`
-		Dot1XIDleTimeout           emptyStringInt `json:"dot1x_idle_timeout"`
-		EgressRateLimitKbps        emptyStringInt `json:"egress_rate_limit_kbps"`
-		MirrorPortIDX              emptyStringInt `json:"mirror_port_idx"`
-		PortIDX                    emptyStringInt `json:"port_idx"`
-		PriorityQueue1Level        emptyStringInt `json:"priority_queue1_level"`
-		PriorityQueue2Level        emptyStringInt `json:"priority_queue2_level"`
-		PriorityQueue3Level        emptyStringInt `json:"priority_queue3_level"`
-		PriorityQueue4Level        emptyStringInt `json:"priority_queue4_level"`
-		Speed                      emptyStringInt `json:"speed"`
-		StormctrlBroadcastastLevel emptyStringInt `json:"stormctrl_bcast_level"`
-		StormctrlBroadcastastRate  emptyStringInt `json:"stormctrl_bcast_rate"`
-		StormctrlMcastLevel        emptyStringInt `json:"stormctrl_mcast_level"`
-		StormctrlMcastRate         emptyStringInt `json:"stormctrl_mcast_rate"`
-		StormctrlUcastLevel        emptyStringInt `json:"stormctrl_ucast_level"`
-		StormctrlUcastRate         emptyStringInt `json:"stormctrl_ucast_rate"`
+		AggregateNumPorts          emptyStringInt    `json:"aggregate_num_ports"`
+		Dot1XIDleTimeout           emptyStringInt    `json:"dot1x_idle_timeout"`
+		EgressRateLimitKbps        emptyStringInt    `json:"egress_rate_limit_kbps"`
+		MirrorPortIDX              emptyStringInt    `json:"mirror_port_idx"`
+		PortIDX                    emptyStringInt    `json:"port_idx"`
+		PriorityQueue1Level        emptyStringInt    `json:"priority_queue1_level"`
+		PriorityQueue2Level        emptyStringInt    `json:"priority_queue2_level"`
+		PriorityQueue3Level        emptyStringInt    `json:"priority_queue3_level"`
+		PriorityQueue4Level        emptyStringInt    `json:"priority_queue4_level"`
+		QOSProfile                 *DeviceQOSProfile `json:"qos_profile"`
+		Speed                      emptyStringInt    `json:"speed"`
+		StormctrlBroadcastastLevel emptyStringInt    `json:"stormctrl_bcast_level"`
+		StormctrlBroadcastastRate  emptyStringInt    `json:"stormctrl_bcast_rate"`
+		StormctrlMcastLevel        emptyStringInt    `json:"stormctrl_mcast_level"`
+		StormctrlMcastRate         emptyStringInt    `json:"stormctrl_mcast_rate"`
+		StormctrlUcastLevel        emptyStringInt    `json:"stormctrl_ucast_level"`
+		StormctrlUcastRate         emptyStringInt    `json:"stormctrl_ucast_rate"`
 
 		*Alias
 	}{
@@ -351,6 +352,7 @@ func (dst *DevicePortOverrides) UnmarshalJSON(b []byte) error {
 	dst.PriorityQueue2Level = int(aux.PriorityQueue2Level)
 	dst.PriorityQueue3Level = int(aux.PriorityQueue3Level)
 	dst.PriorityQueue4Level = int(aux.PriorityQueue4Level)
+	dst.QOSProfile = DeviceQOSProfile(aux.QOSProfile)
 	dst.Speed = int(aux.Speed)
 	dst.StormctrlBroadcastastLevel = int(aux.StormctrlBroadcastastLevel)
 	dst.StormctrlBroadcastastRate = int(aux.StormctrlBroadcastastRate)

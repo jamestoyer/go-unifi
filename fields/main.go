@@ -352,6 +352,12 @@ func main() {
 				switch name {
 				case "PortOverrides":
 					f.OmitEmpty = false
+
+					if _, ok := f.Fields["QOSProfile"]; ok {
+						// Do not send a profile if it is null
+						f.Fields["QOSProfile"].CustomUnmarshalType = "*" + f.Fields["QOSProfile"].FieldType
+						f.Fields["QOSProfile"].OmitEmpty = true
+					}
 				}
 
 				return nil
