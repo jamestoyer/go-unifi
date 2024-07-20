@@ -17,19 +17,19 @@ var (
 )
 
 type ScheduleTask struct {
-	ID     string `json:"_id,omitempty"`
-	SiteID string `json:"site_id,omitempty"`
+	ID     *string `json:"_id,omitempty"`
+	SiteID *string `json:"site_id,omitempty"`
 
-	Hidden   bool   `json:"attr_hidden,omitempty"`
-	HiddenID string `json:"attr_hidden_id,omitempty"`
-	NoDelete bool   `json:"attr_no_delete,omitempty"`
-	NoEdit   bool   `json:"attr_no_edit,omitempty"`
+	Hidden   *bool   `json:"attr_hidden,omitempty"`
+	HiddenID *string `json:"attr_hidden_id,omitempty"`
+	NoDelete *bool   `json:"attr_no_delete,omitempty"`
+	NoEdit   *bool   `json:"attr_no_edit,omitempty"`
 
-	Action          string                       `json:"action,omitempty"` // upgrade
-	CronExpr        string                       `json:"cron_expr,omitempty"`
-	ExecuteOnlyOnce bool                         `json:"execute_only_once"`
-	Name            string                       `json:"name,omitempty"`
-	UpgradeTargets  []ScheduleTaskUpgradeTargets `json:"upgrade_targets,omitempty"`
+	Action          *string                       `json:"action,omitempty"` // upgrade
+	CronExpr        *string                       `json:"cron_expr,omitempty"`
+	ExecuteOnlyOnce bool                          `json:"execute_only_once"`
+	Name            *string                       `json:"name,omitempty"`
+	UpgradeTargets  *[]ScheduleTaskUpgradeTargets `json:"upgrade_targets,omitempty"`
 }
 
 func (dst *ScheduleTask) UnmarshalJSON(b []byte) error {
@@ -49,7 +49,7 @@ func (dst *ScheduleTask) UnmarshalJSON(b []byte) error {
 }
 
 type ScheduleTaskUpgradeTargets struct {
-	MAC string `json:"mac,omitempty"` // ^([0-9A-Fa-f]{2}:){5}([0-9A-Fa-f]{2})$
+	MAC *string `json:"mac,omitempty"` // ^([0-9A-Fa-f]{2}:){5}([0-9A-Fa-f]{2})$
 }
 
 func (dst *ScheduleTaskUpgradeTargets) UnmarshalJSON(b []byte) error {
@@ -135,7 +135,7 @@ func (c *Client) updateScheduleTask(ctx context.Context, site string, d *Schedul
 		Data []ScheduleTask `json:"data"`
 	}
 
-	err := c.do(ctx, "PUT", fmt.Sprintf("s/%s/rest/scheduletask/%s", site, d.ID), d, &respBody)
+	err := c.do(ctx, "PUT", fmt.Sprintf("s/%s/rest/scheduletask/%s", site, *d.ID), d, &respBody)
 	if err != nil {
 		return nil, err
 	}

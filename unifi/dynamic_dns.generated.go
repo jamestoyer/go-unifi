@@ -17,22 +17,22 @@ var (
 )
 
 type DynamicDNS struct {
-	ID     string `json:"_id,omitempty"`
-	SiteID string `json:"site_id,omitempty"`
+	ID     *string `json:"_id,omitempty"`
+	SiteID *string `json:"site_id,omitempty"`
 
-	Hidden   bool   `json:"attr_hidden,omitempty"`
-	HiddenID string `json:"attr_hidden_id,omitempty"`
-	NoDelete bool   `json:"attr_no_delete,omitempty"`
-	NoEdit   bool   `json:"attr_no_edit,omitempty"`
+	Hidden   *bool   `json:"attr_hidden,omitempty"`
+	HiddenID *string `json:"attr_hidden_id,omitempty"`
+	NoDelete *bool   `json:"attr_no_delete,omitempty"`
+	NoEdit   *bool   `json:"attr_no_edit,omitempty"`
 
-	CustomService string   `json:"custom_service,omitempty"` // ^[^"' ]+$
-	HostName      string   `json:"host_name,omitempty"`      // ^[^"' ]+$
-	Interface     string   `json:"interface,omitempty"`      // wan|wan2
-	Login         string   `json:"login,omitempty"`          // ^[^"' ]+$
-	Options       []string `json:"options,omitempty"`        // ^[^"' ]+$
-	Server        string   `json:"server"`                   // ^[^"' ]+$|^$
-	Service       string   `json:"service,omitempty"`        // afraid|changeip|cloudflare|cloudxns|ddnss|dhis|dnsexit|dnsomatic|dnspark|dnspod|dslreports|dtdns|duckdns|duiadns|dyn|dyndns|dynv6|easydns|freemyip|googledomains|loopia|namecheap|noip|nsupdate|ovh|sitelutions|spdyn|strato|tunnelbroker|zoneedit|custom
-	XPassword     string   `json:"x_password,omitempty"`     // ^[^"' ]+$
+	CustomService *string   `json:"custom_service,omitempty"` // ^[^"' ]+$
+	HostName      *string   `json:"host_name,omitempty"`      // ^[^"' ]+$
+	Interface     *string   `json:"interface,omitempty"`      // wan|wan2
+	Login         *string   `json:"login,omitempty"`          // ^[^"' ]+$
+	Options       *[]string `json:"options,omitempty"`        // ^[^"' ]+$
+	Server        string    `json:"server"`                   // ^[^"' ]+$|^$
+	Service       *string   `json:"service,omitempty"`        // afraid|changeip|cloudflare|cloudxns|ddnss|dhis|dnsexit|dnsomatic|dnspark|dnspod|dslreports|dtdns|duckdns|duiadns|dyn|dyndns|dynv6|easydns|freemyip|googledomains|loopia|namecheap|noip|nsupdate|ovh|sitelutions|spdyn|strato|tunnelbroker|zoneedit|custom
+	XPassword     *string   `json:"x_password,omitempty"`     // ^[^"' ]+$
 }
 
 func (dst *DynamicDNS) UnmarshalJSON(b []byte) error {
@@ -118,7 +118,7 @@ func (c *Client) updateDynamicDNS(ctx context.Context, site string, d *DynamicDN
 		Data []DynamicDNS `json:"data"`
 	}
 
-	err := c.do(ctx, "PUT", fmt.Sprintf("s/%s/rest/dynamicdns/%s", site, d.ID), d, &respBody)
+	err := c.do(ctx, "PUT", fmt.Sprintf("s/%s/rest/dynamicdns/%s", site, *d.ID), d, &respBody)
 	if err != nil {
 		return nil, err
 	}

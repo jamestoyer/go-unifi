@@ -1,21 +1,29 @@
 {{- $structName := .StructName }}
 
 {{ define "field" }}
-	{{ .FieldName }} {{ if .IsArray }}[]{{end}}{{ .FieldType }} `json:"{{ .JSONName }}{{ if .OmitEmpty }},omitempty{{ end }}"` {{ if .FieldValidation }}// {{ .FieldValidation }}{{ end }} {{- end }}
+	{{ .FieldName }} {{ if .OmitEmpty }}*{{ end }}{{ if .IsArray }}[]{{end}}{{ .FieldType }} `json:"{{ .JSONName }}{{ if .OmitEmpty }},omitempty{{ end }}"` {{ if .FieldValidation }}// {{ .FieldValidation }}{{ end }} {{- end }}
 {{ define "field-customUnmarshalType" }}
 	{{- if eq .CustomUnmarshalType "" }}{{else}}
-			{{ .FieldName }} {{ if .IsArray }}[]{{end}}{{ .CustomUnmarshalType }} `json:"{{ .JSONName }}"`{{ end }} {{- end }}
+			{{ .FieldName }} {{ if .OmitEmpty }}*{{ end }}{{ if .IsArray }}[]{{end}}{{ .CustomUnmarshalType }} `json:"{{ .JSONName }}{{ if .OmitEmpty }},omitempty{{ end }}"`{{ end }} {{- end }}
 {{ define "typecast" }}
 	{{- if ne .CustomUnmarshalFunc "" }}
 		dst.{{ .FieldName }}= {{ .CustomUnmarshalFunc }}(aux.{{ .FieldName }})
 	{{- else if eq .CustomUnmarshalType "" }}{{else}}
-		{{- if .IsArray }}
+	    {{- if and .IsArray .OmitEmpty}}
+	    if aux.{{ .FieldName }} != nil {
+	        tmp := make([]{{ .FieldType }}, len(*aux.{{ .FieldName }}))
+            for i, v := range *aux.{{ .FieldName }} {
+                    tmp[i] = {{ .FieldType }}(v)
+            }
+            dst.{{ .FieldName }} = &tmp
+	    }
+		{{- else if .IsArray }}
 		dst.{{ .FieldName }}= make([]{{ .FieldType }}, len(aux.{{ .FieldName }}))
 		for i, v := range aux.{{ .FieldName }} {
 				dst.{{ .FieldName }}[i] = {{ .FieldType }}(v)
 		}
 		{{- else }}
-		dst.{{ .FieldName }} = {{ .FieldType }}(aux.{{ .FieldName }})
+		dst.{{ .FieldName }} = {{ if .OmitEmpty }}(*{{ .FieldType }}){{else}}{{ .FieldType }}{{end}}(aux.{{ .FieldName }})
 		{{- end }}{{- end }}{{- end }}
 // Code generated from ace.jar fields *.json files
 // DO NOT EDIT.
@@ -141,7 +149,7 @@ func (c *Client) update{{ .StructName }}(ctx context.Context, site string, d *{{
 	d.Key = "{{ .ResourcePath }}"
 	err := c.do(ctx, "PUT", fmt.Sprintf("s/%s/set/setting/{{ .ResourcePath }}", site), d, &respBody)
 {{- else }}
-	err := c.do(ctx, "PUT", fmt.Sprintf("s/%s/rest/{{ .ResourcePath }}/%s", site, d.ID), d, &respBody)
+	err := c.do(ctx, "PUT", fmt.Sprintf("s/%s/rest/{{ .ResourcePath }}/%s", site, *d.ID), d, &respBody)
 {{- end }}
 	if err != nil {
 		return nil, err

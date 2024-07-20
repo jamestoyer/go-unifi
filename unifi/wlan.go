@@ -6,7 +6,7 @@ import (
 
 func (c *Client) CreateWLAN(ctx context.Context, site string, d *WLAN) (*WLAN, error) {
 	if d.Schedule == nil {
-		d.Schedule = []string{}
+		d.Schedule = &[]string{}
 	}
 
 	return c.createWLAN(ctx, site, d)

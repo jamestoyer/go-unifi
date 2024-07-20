@@ -17,19 +17,19 @@ var (
 )
 
 type HeatMapPoint struct {
-	ID     string `json:"_id,omitempty"`
-	SiteID string `json:"site_id,omitempty"`
+	ID     *string `json:"_id,omitempty"`
+	SiteID *string `json:"site_id,omitempty"`
 
-	Hidden   bool   `json:"attr_hidden,omitempty"`
-	HiddenID string `json:"attr_hidden_id,omitempty"`
-	NoDelete bool   `json:"attr_no_delete,omitempty"`
-	NoEdit   bool   `json:"attr_no_edit,omitempty"`
+	Hidden   *bool   `json:"attr_hidden,omitempty"`
+	HiddenID *string `json:"attr_hidden_id,omitempty"`
+	NoDelete *bool   `json:"attr_no_delete,omitempty"`
+	NoEdit   *bool   `json:"attr_no_edit,omitempty"`
 
-	DownloadSpeed float64 `json:"download_speed,omitempty"`
-	HeatmapID     string  `json:"heatmap_id"`
-	UploadSpeed   float64 `json:"upload_speed,omitempty"`
-	X             float64 `json:"x,omitempty"`
-	Y             float64 `json:"y,omitempty"`
+	DownloadSpeed *float64 `json:"download_speed,omitempty"`
+	HeatmapID     string   `json:"heatmap_id"`
+	UploadSpeed   *float64 `json:"upload_speed,omitempty"`
+	X             *float64 `json:"x,omitempty"`
+	Y             *float64 `json:"y,omitempty"`
 }
 
 func (dst *HeatMapPoint) UnmarshalJSON(b []byte) error {
@@ -115,7 +115,7 @@ func (c *Client) updateHeatMapPoint(ctx context.Context, site string, d *HeatMap
 		Data []HeatMapPoint `json:"data"`
 	}
 
-	err := c.do(ctx, "PUT", fmt.Sprintf("s/%s/rest/heatmappoint/%s", site, d.ID), d, &respBody)
+	err := c.do(ctx, "PUT", fmt.Sprintf("s/%s/rest/heatmappoint/%s", site, *d.ID), d, &respBody)
 	if err != nil {
 		return nil, err
 	}

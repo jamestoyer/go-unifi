@@ -27,12 +27,13 @@ func TestDevicePortOverrides_UnmarshalJSON(t *testing.T) {
 	// assert.Equal(t, sampleOverride, output)
 
 	var te *[]string
+	var ns *string
 	assert.Nil(t, output.Autoneg)
 	assert.Equal(t, stringPtr(""), output.Name)
 	assert.Equal(t, boolPtr(false), output.PortKeepaliveEnabled)
 	assert.Equal(t, &[]string{}, output.PortSecurityMACAddress)
 	assert.Equal(t, te, output.ExcludedNetworkIDs)
-	assert.Equal(t, "", output.PortProfileID)
+	assert.Equal(t, ns, output.PortProfileID)
 
 	// type fields struct {
 	// 	AggregateNumPorts            int
