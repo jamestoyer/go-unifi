@@ -77,7 +77,7 @@ func (c *Client) listDashboard(ctx context.Context, site string) ([]Dashboard, e
 		Data []Dashboard `json:"data"`
 	}
 
-	err := c.do(ctx, "GET", fmt.Sprintf("s/%s/rest/dashboard", site), nil, &respBody)
+	err := c.Do(ctx, "GET", fmt.Sprintf("s/%s/rest/dashboard", site), nil, &respBody)
 	if err != nil {
 		return nil, err
 	}
@@ -91,7 +91,7 @@ func (c *Client) getDashboard(ctx context.Context, site, id string) (*Dashboard,
 		Data []Dashboard `json:"data"`
 	}
 
-	err := c.do(ctx, "GET", fmt.Sprintf("s/%s/rest/dashboard/%s", site, id), nil, &respBody)
+	err := c.Do(ctx, "GET", fmt.Sprintf("s/%s/rest/dashboard/%s", site, id), nil, &respBody)
 	if err != nil {
 		return nil, err
 	}
@@ -105,7 +105,7 @@ func (c *Client) getDashboard(ctx context.Context, site, id string) (*Dashboard,
 }
 
 func (c *Client) deleteDashboard(ctx context.Context, site, id string) error {
-	err := c.do(ctx, "DELETE", fmt.Sprintf("s/%s/rest/dashboard/%s", site, id), struct{}{}, nil)
+	err := c.Do(ctx, "DELETE", fmt.Sprintf("s/%s/rest/dashboard/%s", site, id), struct{}{}, nil)
 	if err != nil {
 		return err
 	}
@@ -118,7 +118,7 @@ func (c *Client) createDashboard(ctx context.Context, site string, d *Dashboard)
 		Data []Dashboard `json:"data"`
 	}
 
-	err := c.do(ctx, "POST", fmt.Sprintf("s/%s/rest/dashboard", site), d, &respBody)
+	err := c.Do(ctx, "POST", fmt.Sprintf("s/%s/rest/dashboard", site), d, &respBody)
 	if err != nil {
 		return nil, err
 	}
@@ -138,7 +138,7 @@ func (c *Client) updateDashboard(ctx context.Context, site string, d *Dashboard)
 		Data []Dashboard `json:"data"`
 	}
 
-	err := c.do(ctx, "PUT", fmt.Sprintf("s/%s/rest/dashboard/%s", site, d.ID), d, &respBody)
+	err := c.Do(ctx, "PUT", fmt.Sprintf("s/%s/rest/dashboard/%s", site, d.ID), d, &respBody)
 	if err != nil {
 		return nil, err
 	}

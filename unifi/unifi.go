@@ -153,7 +153,7 @@ func (c *Client) Login(ctx context.Context, user, pass string) error {
 		} `json:"meta"`
 	}
 
-	err = c.do(ctx, "POST", c.loginPath, &struct {
+	err = c.Do(ctx, "POST", c.loginPath, &struct {
 		Username string `json:"username"`
 		Password string `json:"password"`
 	}{
@@ -164,7 +164,7 @@ func (c *Client) Login(ctx context.Context, user, pass string) error {
 		return err
 	}
 
-	err = c.do(ctx, "GET", c.statusPath, nil, &status)
+	err = c.Do(ctx, "GET", c.statusPath, nil, &status)
 	if err != nil {
 		return err
 	}
@@ -190,7 +190,24 @@ func (c *Client) Login(ctx context.Context, user, pass string) error {
 	return nil
 }
 
-func (c *Client) do(ctx context.Context, method, relativeURL string, reqBody interface{}, respBody interface{}) error {
+func (c *Client) Do(ctx context.Context, method, relativeURL string, reqBody interface{}, respBody interface{}) error {
+	respBytes, err := c.DoRaw(ctx, method, relativeURL, reqBody)
+	if err != nil {
+		return err
+	}
+
+	if respBody == nil || len(respBytes) == 0 {
+		return nil
+	}
+
+	if err = json.Unmarshal(respBytes, respBody); err != nil {
+		return fmt.Errorf("unable to decode body: %s %s %w", method, relativeURL, err)
+	}
+
+	return nil
+}
+
+func (c *Client) DoRaw(ctx context.Context, method, relativeURL string, reqBody interface{}) ([]byte, error) {
 	// single threading requests, this is mostly to assist in CSRF token propagation
 	c.Lock()
 	defer c.Unlock()
@@ -203,14 +220,14 @@ func (c *Client) do(ctx context.Context, method, relativeURL string, reqBody int
 	if reqBody != nil {
 		reqBytes, err = json.Marshal(reqBody)
 		if err != nil {
-			return fmt.Errorf("unable to marshal JSON: %s %s %w", method, relativeURL, err)
+			return nil, fmt.Errorf("unable to marshal JSON: %s %s %w", method, relativeURL, err)
 		}
 		reqReader = bytes.NewReader(reqBytes)
 	}
 
 	reqURL, err := url.Parse(relativeURL)
 	if err != nil {
-		return fmt.Errorf("unable to parse URL: %s %s %w", method, relativeURL, err)
+		return nil, fmt.Errorf("unable to parse URL: %s %s %w", method, relativeURL, err)
 	}
 	if !strings.HasPrefix(relativeURL, "/") && !reqURL.IsAbs() {
 		reqURL.Path = path.Join(c.apiPath, reqURL.Path)
@@ -219,7 +236,7 @@ func (c *Client) do(ctx context.Context, method, relativeURL string, reqBody int
 	url := c.baseURL.ResolveReference(reqURL)
 	req, err := http.NewRequestWithContext(ctx, method, url.String(), reqReader)
 	if err != nil {
-		return fmt.Errorf("unable to create request: %s %s %w", method, relativeURL, err)
+		return nil, fmt.Errorf("unable to create request: %s %s %w", method, relativeURL, err)
 	}
 
 	req.Header.Set("User-Agent", "terraform-provider-unifi/0.1")
@@ -231,12 +248,12 @@ func (c *Client) do(ctx context.Context, method, relativeURL string, reqBody int
 
 	resp, err := c.c.Do(req)
 	if err != nil {
-		return fmt.Errorf("unable to perform request: %s %s %w", method, relativeURL, err)
+		return nil, fmt.Errorf("unable to perform request: %s %s %w", method, relativeURL, err)
 	}
 	defer resp.Body.Close()
 
 	if resp.StatusCode == http.StatusNotFound {
-		return &NotFoundError{}
+		return nil, &NotFoundError{}
 	}
 
 	if csrf := resp.Header.Get("x-csrf-token"); csrf != "" {
@@ -251,7 +268,7 @@ func (c *Client) do(ctx context.Context, method, relativeURL string, reqBody int
 			} `json:"data"`
 		}{}
 		if err = json.NewDecoder(resp.Body).Decode(&errBody); err != nil {
-			return err
+			return nil, err
 		}
 		var apiErr error
 		if len(errBody.Data) > 0 && errBody.Data[0].Meta.RC == "error" {
@@ -261,21 +278,19 @@ func (c *Client) do(ctx context.Context, method, relativeURL string, reqBody int
 		if apiErr == nil {
 			apiErr = errBody.Meta.error()
 		}
-		return fmt.Errorf("%w (%s) for %s %s", apiErr, resp.Status, method, url.String())
+		return nil, fmt.Errorf("%w (%s) for %s %s", apiErr, resp.Status, method, url.String())
 	}
 
-	if respBody == nil || resp.ContentLength == 0 {
-		return nil
+	if resp.ContentLength == 0 {
+		return nil, nil
 	}
 
-	// TODO: check rc in addition to status code?
-
-	err = json.NewDecoder(resp.Body).Decode(respBody)
+	respBody, err := io.ReadAll(resp.Body)
 	if err != nil {
-		return fmt.Errorf("unable to decode body: %s %s %w", method, relativeURL, err)
+		return nil, fmt.Errorf("unable to read body: %s %s %w", method, relativeURL, err)
 	}
 
-	return nil
+	return respBody, nil
 }
 
 type meta struct {

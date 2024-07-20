@@ -112,7 +112,7 @@ func (c *Client) listRADIUSProfile(ctx context.Context, site string) ([]RADIUSPr
 		Data []RADIUSProfile `json:"data"`
 	}
 
-	err := c.do(ctx, "GET", fmt.Sprintf("s/%s/rest/radiusprofile", site), nil, &respBody)
+	err := c.Do(ctx, "GET", fmt.Sprintf("s/%s/rest/radiusprofile", site), nil, &respBody)
 	if err != nil {
 		return nil, err
 	}
@@ -126,7 +126,7 @@ func (c *Client) getRADIUSProfile(ctx context.Context, site, id string) (*RADIUS
 		Data []RADIUSProfile `json:"data"`
 	}
 
-	err := c.do(ctx, "GET", fmt.Sprintf("s/%s/rest/radiusprofile/%s", site, id), nil, &respBody)
+	err := c.Do(ctx, "GET", fmt.Sprintf("s/%s/rest/radiusprofile/%s", site, id), nil, &respBody)
 	if err != nil {
 		return nil, err
 	}
@@ -140,7 +140,7 @@ func (c *Client) getRADIUSProfile(ctx context.Context, site, id string) (*RADIUS
 }
 
 func (c *Client) deleteRADIUSProfile(ctx context.Context, site, id string) error {
-	err := c.do(ctx, "DELETE", fmt.Sprintf("s/%s/rest/radiusprofile/%s", site, id), struct{}{}, nil)
+	err := c.Do(ctx, "DELETE", fmt.Sprintf("s/%s/rest/radiusprofile/%s", site, id), struct{}{}, nil)
 	if err != nil {
 		return err
 	}
@@ -153,7 +153,7 @@ func (c *Client) createRADIUSProfile(ctx context.Context, site string, d *RADIUS
 		Data []RADIUSProfile `json:"data"`
 	}
 
-	err := c.do(ctx, "POST", fmt.Sprintf("s/%s/rest/radiusprofile", site), d, &respBody)
+	err := c.Do(ctx, "POST", fmt.Sprintf("s/%s/rest/radiusprofile", site), d, &respBody)
 	if err != nil {
 		return nil, err
 	}
@@ -173,7 +173,7 @@ func (c *Client) updateRADIUSProfile(ctx context.Context, site string, d *RADIUS
 		Data []RADIUSProfile `json:"data"`
 	}
 
-	err := c.do(ctx, "PUT", fmt.Sprintf("s/%s/rest/radiusprofile/%s", site, d.ID), d, &respBody)
+	err := c.Do(ctx, "PUT", fmt.Sprintf("s/%s/rest/radiusprofile/%s", site, d.ID), d, &respBody)
 	if err != nil {
 		return nil, err
 	}

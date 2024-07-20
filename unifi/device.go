@@ -71,7 +71,7 @@ func (c *Client) AdoptDevice(ctx context.Context, site, mac string) error {
 		Meta meta `json:"meta"`
 	}
 
-	err := c.do(ctx, "POST", fmt.Sprintf("s/%s/cmd/devmgr", site), reqBody, &respBody)
+	err := c.Do(ctx, "POST", fmt.Sprintf("s/%s/cmd/devmgr", site), reqBody, &respBody)
 	if err != nil {
 		return err
 	}
@@ -93,7 +93,7 @@ func (c *Client) ForgetDevice(ctx context.Context, site, mac string) error {
 		Data []Device `json:"data"`
 	}
 
-	err := c.do(ctx, "POST", fmt.Sprintf("s/%s/cmd/sitemgr", site), reqBody, &respBody)
+	err := c.Do(ctx, "POST", fmt.Sprintf("s/%s/cmd/sitemgr", site), reqBody, &respBody)
 	if err != nil {
 		return err
 	}

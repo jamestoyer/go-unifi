@@ -57,7 +57,7 @@ func (c *Client) listUserGroup(ctx context.Context, site string) ([]UserGroup, e
 		Data []UserGroup `json:"data"`
 	}
 
-	err := c.do(ctx, "GET", fmt.Sprintf("s/%s/rest/usergroup", site), nil, &respBody)
+	err := c.Do(ctx, "GET", fmt.Sprintf("s/%s/rest/usergroup", site), nil, &respBody)
 	if err != nil {
 		return nil, err
 	}
@@ -71,7 +71,7 @@ func (c *Client) getUserGroup(ctx context.Context, site, id string) (*UserGroup,
 		Data []UserGroup `json:"data"`
 	}
 
-	err := c.do(ctx, "GET", fmt.Sprintf("s/%s/rest/usergroup/%s", site, id), nil, &respBody)
+	err := c.Do(ctx, "GET", fmt.Sprintf("s/%s/rest/usergroup/%s", site, id), nil, &respBody)
 	if err != nil {
 		return nil, err
 	}
@@ -85,7 +85,7 @@ func (c *Client) getUserGroup(ctx context.Context, site, id string) (*UserGroup,
 }
 
 func (c *Client) deleteUserGroup(ctx context.Context, site, id string) error {
-	err := c.do(ctx, "DELETE", fmt.Sprintf("s/%s/rest/usergroup/%s", site, id), struct{}{}, nil)
+	err := c.Do(ctx, "DELETE", fmt.Sprintf("s/%s/rest/usergroup/%s", site, id), struct{}{}, nil)
 	if err != nil {
 		return err
 	}
@@ -98,7 +98,7 @@ func (c *Client) createUserGroup(ctx context.Context, site string, d *UserGroup)
 		Data []UserGroup `json:"data"`
 	}
 
-	err := c.do(ctx, "POST", fmt.Sprintf("s/%s/rest/usergroup", site), d, &respBody)
+	err := c.Do(ctx, "POST", fmt.Sprintf("s/%s/rest/usergroup", site), d, &respBody)
 	if err != nil {
 		return nil, err
 	}
@@ -118,7 +118,7 @@ func (c *Client) updateUserGroup(ctx context.Context, site string, d *UserGroup)
 		Data []UserGroup `json:"data"`
 	}
 
-	err := c.do(ctx, "PUT", fmt.Sprintf("s/%s/rest/usergroup/%s", site, d.ID), d, &respBody)
+	err := c.Do(ctx, "PUT", fmt.Sprintf("s/%s/rest/usergroup/%s", site, d.ID), d, &respBody)
 	if err != nil {
 		return nil, err
 	}

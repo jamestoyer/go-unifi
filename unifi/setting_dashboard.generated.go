@@ -73,7 +73,7 @@ func (c *Client) getSettingDashboard(ctx context.Context, site string) (*Setting
 		Data []SettingDashboard `json:"data"`
 	}
 
-	err := c.do(ctx, "GET", fmt.Sprintf("s/%s/get/setting/dashboard", site), nil, &respBody)
+	err := c.Do(ctx, "GET", fmt.Sprintf("s/%s/get/setting/dashboard", site), nil, &respBody)
 	if err != nil {
 		return nil, err
 	}
@@ -93,7 +93,7 @@ func (c *Client) updateSettingDashboard(ctx context.Context, site string, d *Set
 	}
 
 	d.Key = "dashboard"
-	err := c.do(ctx, "PUT", fmt.Sprintf("s/%s/set/setting/dashboard", site), d, &respBody)
+	err := c.Do(ctx, "PUT", fmt.Sprintf("s/%s/set/setting/dashboard", site), d, &respBody)
 	if err != nil {
 		return nil, err
 	}

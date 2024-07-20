@@ -57,7 +57,7 @@ func (c *Client) getSettingConnectivity(ctx context.Context, site string) (*Sett
 		Data []SettingConnectivity `json:"data"`
 	}
 
-	err := c.do(ctx, "GET", fmt.Sprintf("s/%s/get/setting/connectivity", site), nil, &respBody)
+	err := c.Do(ctx, "GET", fmt.Sprintf("s/%s/get/setting/connectivity", site), nil, &respBody)
 	if err != nil {
 		return nil, err
 	}
@@ -77,7 +77,7 @@ func (c *Client) updateSettingConnectivity(ctx context.Context, site string, d *
 	}
 
 	d.Key = "connectivity"
-	err := c.do(ctx, "PUT", fmt.Sprintf("s/%s/set/setting/connectivity", site), d, &respBody)
+	err := c.Do(ctx, "PUT", fmt.Sprintf("s/%s/set/setting/connectivity", site), d, &respBody)
 	if err != nil {
 		return nil, err
 	}

@@ -95,7 +95,7 @@ func (c *Client) getSettingEtherLighting(ctx context.Context, site string) (*Set
 		Data []SettingEtherLighting `json:"data"`
 	}
 
-	err := c.do(ctx, "GET", fmt.Sprintf("s/%s/get/setting/ether_lighting", site), nil, &respBody)
+	err := c.Do(ctx, "GET", fmt.Sprintf("s/%s/get/setting/ether_lighting", site), nil, &respBody)
 	if err != nil {
 		return nil, err
 	}
@@ -115,7 +115,7 @@ func (c *Client) updateSettingEtherLighting(ctx context.Context, site string, d 
 	}
 
 	d.Key = "ether_lighting"
-	err := c.do(ctx, "PUT", fmt.Sprintf("s/%s/set/setting/ether_lighting", site), d, &respBody)
+	err := c.Do(ctx, "PUT", fmt.Sprintf("s/%s/set/setting/ether_lighting", site), d, &respBody)
 	if err != nil {
 		return nil, err
 	}

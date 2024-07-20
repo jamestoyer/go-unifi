@@ -14,7 +14,7 @@ func (c *Client) GetUserByMAC(ctx context.Context, site, mac string) (*User, err
 		Data []User `json:"data"`
 	}
 
-	err := c.do(ctx, "GET", fmt.Sprintf("s/%s/stat/user/%s", site, mac), nil, &respBody)
+	err := c.Do(ctx, "GET", fmt.Sprintf("s/%s/stat/user/%s", site, mac), nil, &respBody)
 	if err != nil {
 		return nil, err
 	}
@@ -48,7 +48,7 @@ func (c *Client) CreateUser(ctx context.Context, site string, d *User) (*User, e
 		} `json:"data"`
 	}
 
-	err := c.do(ctx, "POST", fmt.Sprintf("s/%s/group/user", site), reqBody, &respBody)
+	err := c.Do(ctx, "POST", fmt.Sprintf("s/%s/group/user", site), reqBody, &respBody)
 	if err != nil {
 		return nil, err
 	}
@@ -84,7 +84,7 @@ func (c *Client) stamgr(ctx context.Context, site, cmd string, data map[string]i
 		Data []User `json:"data"`
 	}
 
-	err := c.do(ctx, "POST", fmt.Sprintf("s/%s/cmd/stamgr", site), reqBody, &respBody)
+	err := c.Do(ctx, "POST", fmt.Sprintf("s/%s/cmd/stamgr", site), reqBody, &respBody)
 	if err != nil {
 		return nil, err
 	}
@@ -164,7 +164,7 @@ func (c *Client) OverrideUserFingerprint(ctx context.Context, site, mac string, 
 		SearchQuery   string `json:"search_query"`
 	}
 
-	err := c.do(ctx, reqMethod, fmt.Sprintf("%s/site/%s/station/%s/fingerprint_override", c.apiV2Path, site, mac), reqBody, &respBody)
+	err := c.Do(ctx, reqMethod, fmt.Sprintf("%s/site/%s/station/%s/fingerprint_override", c.apiV2Path, site, mac), reqBody, &respBody)
 	if err != nil {
 		return err
 	}

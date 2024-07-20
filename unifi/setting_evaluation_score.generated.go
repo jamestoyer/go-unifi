@@ -52,7 +52,7 @@ func (c *Client) getSettingEvaluationScore(ctx context.Context, site string) (*S
 		Data []SettingEvaluationScore `json:"data"`
 	}
 
-	err := c.do(ctx, "GET", fmt.Sprintf("s/%s/get/setting/evaluation_score", site), nil, &respBody)
+	err := c.Do(ctx, "GET", fmt.Sprintf("s/%s/get/setting/evaluation_score", site), nil, &respBody)
 	if err != nil {
 		return nil, err
 	}
@@ -72,7 +72,7 @@ func (c *Client) updateSettingEvaluationScore(ctx context.Context, site string, 
 	}
 
 	d.Key = "evaluation_score"
-	err := c.do(ctx, "PUT", fmt.Sprintf("s/%s/set/setting/evaluation_score", site), d, &respBody)
+	err := c.Do(ctx, "PUT", fmt.Sprintf("s/%s/set/setting/evaluation_score", site), d, &respBody)
 	if err != nil {
 		return nil, err
 	}

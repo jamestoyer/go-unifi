@@ -602,7 +602,7 @@ func (c *Client) listDevice(ctx context.Context, site string) ([]Device, error) 
 		Data []Device `json:"data"`
 	}
 
-	err := c.do(ctx, "GET", fmt.Sprintf("s/%s/stat/device", site), nil, &respBody)
+	err := c.Do(ctx, "GET", fmt.Sprintf("s/%s/stat/device", site), nil, &respBody)
 	if err != nil {
 		return nil, err
 	}
@@ -616,7 +616,7 @@ func (c *Client) getDevice(ctx context.Context, site, id string) (*Device, error
 		Data []Device `json:"data"`
 	}
 
-	err := c.do(ctx, "GET", fmt.Sprintf("s/%s/stat/device/%s", site, id), nil, &respBody)
+	err := c.Do(ctx, "GET", fmt.Sprintf("s/%s/stat/device/%s", site, id), nil, &respBody)
 	if err != nil {
 		return nil, err
 	}
@@ -630,7 +630,7 @@ func (c *Client) getDevice(ctx context.Context, site, id string) (*Device, error
 }
 
 func (c *Client) deleteDevice(ctx context.Context, site, id string) error {
-	err := c.do(ctx, "DELETE", fmt.Sprintf("s/%s/rest/device/%s", site, id), struct{}{}, nil)
+	err := c.Do(ctx, "DELETE", fmt.Sprintf("s/%s/rest/device/%s", site, id), struct{}{}, nil)
 	if err != nil {
 		return err
 	}
@@ -643,7 +643,7 @@ func (c *Client) createDevice(ctx context.Context, site string, d *Device) (*Dev
 		Data []Device `json:"data"`
 	}
 
-	err := c.do(ctx, "POST", fmt.Sprintf("s/%s/rest/device", site), d, &respBody)
+	err := c.Do(ctx, "POST", fmt.Sprintf("s/%s/rest/device", site), d, &respBody)
 	if err != nil {
 		return nil, err
 	}
@@ -663,7 +663,7 @@ func (c *Client) updateDevice(ctx context.Context, site string, d *Device) (*Dev
 		Data []Device `json:"data"`
 	}
 
-	err := c.do(ctx, "PUT", fmt.Sprintf("s/%s/rest/device/%s", site, d.ID), d, &respBody)
+	err := c.Do(ctx, "PUT", fmt.Sprintf("s/%s/rest/device/%s", site, d.ID), d, &respBody)
 	if err != nil {
 		return nil, err
 	}

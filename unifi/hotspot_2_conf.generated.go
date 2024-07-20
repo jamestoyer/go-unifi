@@ -433,7 +433,7 @@ func (c *Client) listHotspot2Conf(ctx context.Context, site string) ([]Hotspot2C
 		Data []Hotspot2Conf `json:"data"`
 	}
 
-	err := c.do(ctx, "GET", fmt.Sprintf("s/%s/rest/hotspot2conf", site), nil, &respBody)
+	err := c.Do(ctx, "GET", fmt.Sprintf("s/%s/rest/hotspot2conf", site), nil, &respBody)
 	if err != nil {
 		return nil, err
 	}
@@ -447,7 +447,7 @@ func (c *Client) getHotspot2Conf(ctx context.Context, site, id string) (*Hotspot
 		Data []Hotspot2Conf `json:"data"`
 	}
 
-	err := c.do(ctx, "GET", fmt.Sprintf("s/%s/rest/hotspot2conf/%s", site, id), nil, &respBody)
+	err := c.Do(ctx, "GET", fmt.Sprintf("s/%s/rest/hotspot2conf/%s", site, id), nil, &respBody)
 	if err != nil {
 		return nil, err
 	}
@@ -461,7 +461,7 @@ func (c *Client) getHotspot2Conf(ctx context.Context, site, id string) (*Hotspot
 }
 
 func (c *Client) deleteHotspot2Conf(ctx context.Context, site, id string) error {
-	err := c.do(ctx, "DELETE", fmt.Sprintf("s/%s/rest/hotspot2conf/%s", site, id), struct{}{}, nil)
+	err := c.Do(ctx, "DELETE", fmt.Sprintf("s/%s/rest/hotspot2conf/%s", site, id), struct{}{}, nil)
 	if err != nil {
 		return err
 	}
@@ -474,7 +474,7 @@ func (c *Client) createHotspot2Conf(ctx context.Context, site string, d *Hotspot
 		Data []Hotspot2Conf `json:"data"`
 	}
 
-	err := c.do(ctx, "POST", fmt.Sprintf("s/%s/rest/hotspot2conf", site), d, &respBody)
+	err := c.Do(ctx, "POST", fmt.Sprintf("s/%s/rest/hotspot2conf", site), d, &respBody)
 	if err != nil {
 		return nil, err
 	}
@@ -494,7 +494,7 @@ func (c *Client) updateHotspot2Conf(ctx context.Context, site string, d *Hotspot
 		Data []Hotspot2Conf `json:"data"`
 	}
 
-	err := c.do(ctx, "PUT", fmt.Sprintf("s/%s/rest/hotspot2conf/%s", site, d.ID), d, &respBody)
+	err := c.Do(ctx, "PUT", fmt.Sprintf("s/%s/rest/hotspot2conf/%s", site, d.ID), d, &respBody)
 	if err != nil {
 		return nil, err
 	}

@@ -55,7 +55,7 @@ func (c *Client) getSettingBaresip(ctx context.Context, site string) (*SettingBa
 		Data []SettingBaresip `json:"data"`
 	}
 
-	err := c.do(ctx, "GET", fmt.Sprintf("s/%s/get/setting/baresip", site), nil, &respBody)
+	err := c.Do(ctx, "GET", fmt.Sprintf("s/%s/get/setting/baresip", site), nil, &respBody)
 	if err != nil {
 		return nil, err
 	}
@@ -75,7 +75,7 @@ func (c *Client) updateSettingBaresip(ctx context.Context, site string, d *Setti
 	}
 
 	d.Key = "baresip"
-	err := c.do(ctx, "PUT", fmt.Sprintf("s/%s/set/setting/baresip", site), d, &respBody)
+	err := c.Do(ctx, "PUT", fmt.Sprintf("s/%s/set/setting/baresip", site), d, &respBody)
 	if err != nil {
 		return nil, err
 	}

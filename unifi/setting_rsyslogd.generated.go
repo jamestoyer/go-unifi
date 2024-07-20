@@ -65,7 +65,7 @@ func (c *Client) getSettingRsyslogd(ctx context.Context, site string) (*SettingR
 		Data []SettingRsyslogd `json:"data"`
 	}
 
-	err := c.do(ctx, "GET", fmt.Sprintf("s/%s/get/setting/rsyslogd", site), nil, &respBody)
+	err := c.Do(ctx, "GET", fmt.Sprintf("s/%s/get/setting/rsyslogd", site), nil, &respBody)
 	if err != nil {
 		return nil, err
 	}
@@ -85,7 +85,7 @@ func (c *Client) updateSettingRsyslogd(ctx context.Context, site string, d *Sett
 	}
 
 	d.Key = "rsyslogd"
-	err := c.do(ctx, "PUT", fmt.Sprintf("s/%s/set/setting/rsyslogd", site), d, &respBody)
+	err := c.Do(ctx, "PUT", fmt.Sprintf("s/%s/set/setting/rsyslogd", site), d, &respBody)
 	if err != nil {
 		return nil, err
 	}
