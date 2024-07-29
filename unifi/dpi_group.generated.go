@@ -17,17 +17,17 @@ var (
 )
 
 type DpiGroup struct {
-	ID     string `json:"_id,omitempty"`
-	SiteID string `json:"site_id,omitempty"`
+	ID     *string `json:"_id,omitempty"`
+	SiteID *string `json:"site_id,omitempty"`
 
-	Hidden   bool   `json:"attr_hidden,omitempty"`
-	HiddenID string `json:"attr_hidden_id,omitempty"`
-	NoDelete bool   `json:"attr_no_delete,omitempty"`
-	NoEdit   bool   `json:"attr_no_edit,omitempty"`
+	Hidden   *bool   `json:"attr_hidden,omitempty"`
+	HiddenID *string `json:"attr_hidden_id,omitempty"`
+	NoDelete *bool   `json:"attr_no_delete,omitempty"`
+	NoEdit   *bool   `json:"attr_no_edit,omitempty"`
 
-	DPIappIDs []string `json:"dpiapp_ids,omitempty"` // [\d\w]+
-	Enabled   bool     `json:"enabled"`
-	Name      string   `json:"name,omitempty"` // .{1,128}
+	DPIappIDs *[]string `json:"dpiapp_ids,omitempty"` // [\d\w]+
+	Enabled   bool      `json:"enabled"`
+	Name      *string   `json:"name,omitempty"` // .{1,128}
 }
 
 func (dst *DpiGroup) UnmarshalJSON(b []byte) error {
@@ -113,7 +113,7 @@ func (c *Client) updateDpiGroup(ctx context.Context, site string, d *DpiGroup) (
 		Data []DpiGroup `json:"data"`
 	}
 
-	err := c.do(ctx, "PUT", fmt.Sprintf("s/%s/rest/dpigroup/%s", site, d.ID), d, &respBody)
+	err := c.do(ctx, "PUT", fmt.Sprintf("s/%s/rest/dpigroup/%s", site, *d.ID), d, &respBody)
 	if err != nil {
 		return nil, err
 	}

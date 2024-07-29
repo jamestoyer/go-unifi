@@ -17,15 +17,15 @@ var (
 )
 
 type MediaFile struct {
-	ID     string `json:"_id,omitempty"`
-	SiteID string `json:"site_id,omitempty"`
+	ID     *string `json:"_id,omitempty"`
+	SiteID *string `json:"site_id,omitempty"`
 
-	Hidden   bool   `json:"attr_hidden,omitempty"`
-	HiddenID string `json:"attr_hidden_id,omitempty"`
-	NoDelete bool   `json:"attr_no_delete,omitempty"`
-	NoEdit   bool   `json:"attr_no_edit,omitempty"`
+	Hidden   *bool   `json:"attr_hidden,omitempty"`
+	HiddenID *string `json:"attr_hidden_id,omitempty"`
+	NoDelete *bool   `json:"attr_no_delete,omitempty"`
+	NoEdit   *bool   `json:"attr_no_edit,omitempty"`
 
-	Name string `json:"name,omitempty"`
+	Name *string `json:"name,omitempty"`
 }
 
 func (dst *MediaFile) UnmarshalJSON(b []byte) error {
@@ -111,7 +111,7 @@ func (c *Client) updateMediaFile(ctx context.Context, site string, d *MediaFile)
 		Data []MediaFile `json:"data"`
 	}
 
-	err := c.do(ctx, "PUT", fmt.Sprintf("s/%s/rest/mediafile/%s", site, d.ID), d, &respBody)
+	err := c.do(ctx, "PUT", fmt.Sprintf("s/%s/rest/mediafile/%s", site, *d.ID), d, &respBody)
 	if err != nil {
 		return nil, err
 	}

@@ -16,10 +16,9 @@ func (dst *Network) MarshalJSON() ([]byte, error) {
 		Alias: (*Alias)(dst),
 	}
 
-	if dst.Purpose == "wan" {
+	if dst.Purpose != nil && *dst.Purpose == "wan" {
 		// only send QOS when this is a WAN network
-		v := emptyStringInt(dst.WANEgressQOS)
-		aux.WANEgressQOS = &v
+		aux.WANEgressQOS = (*emptyStringInt)(dst.WANEgressQOS)
 	}
 
 	b, err := json.Marshal(aux)

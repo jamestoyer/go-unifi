@@ -10,16 +10,16 @@ func (dst *Account) MarshalJSON() ([]byte, error) {
 	aux := &struct {
 		*Alias
 
-		TunnelType       emptyStringInt `json:"tunnel_type"`
-		TunnelMediumType emptyStringInt `json:"tunnel_medium_type"`
-		VLAN             emptyStringInt `json:"vlan"`
+		TunnelType       *emptyStringInt `json:"tunnel_type,omitempty"`
+		TunnelMediumType *emptyStringInt `json:"tunnel_medium_type,omitempty"`
+		VLAN             *emptyStringInt `json:"vlan,omitempty"`
 	}{
 		Alias: (*Alias)(dst),
 	}
 
-	aux.TunnelType = emptyStringInt(dst.TunnelType)
-	aux.TunnelMediumType = emptyStringInt(dst.TunnelMediumType)
-	aux.VLAN = emptyStringInt(dst.VLAN)
+	aux.TunnelType = (*emptyStringInt)(dst.TunnelType)
+	aux.TunnelMediumType = (*emptyStringInt)(dst.TunnelMediumType)
+	aux.VLAN = (*emptyStringInt)(dst.VLAN)
 
 	b, err := json.Marshal(aux)
 	return b, err
